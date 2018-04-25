@@ -2,7 +2,9 @@ AAA Chain
 ==============
 
 AAA Chain is the customized blockchain implementation based on Bitshare2.0 for data area scenario.
+
 Import new object type to support data creation and transacton.
+
 Migrate webassembly VM into AAA chain to provide contract.
 
 
@@ -35,7 +37,7 @@ After building, launch the witness node with the following command:
 
 The node will consume some time to sync data from the chain.
 
-Start commandline wallet
+Start command line wallet
 ------------------------
 
 After starting the witness node, start commandline wallet in a separate terminal by running:
