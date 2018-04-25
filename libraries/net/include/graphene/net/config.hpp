@@ -34,9 +34,9 @@
 #define ENABLE_P2P_DEBUGGING_API                             1
 
 /**
- * 2MiB
+ * 3MiB
  */
-#define MAX_MESSAGE_SIZE                                     1024*1024*2
+#define MAX_MESSAGE_SIZE                                     1024*1024*3
 #define GRAPHENE_NET_DEFAULT_PEER_CONNECTION_RETRY_TIME      30 // seconds
 
 /**
