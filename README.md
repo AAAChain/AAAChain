@@ -62,3 +62,5 @@ Support
 -------
 
 bugs can be reported to the [issue tracker](https://github.com/AAAChain/aaa_chain/issues).
+
+wallet api can be viewed from [wiki-wallet-api](https://github.com/AAAChain/aaa_chain/wiki/Wallet-API-Call).
