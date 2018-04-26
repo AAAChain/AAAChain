@@ -3,7 +3,7 @@ AAA Chain
 
 AAA Chain is the customized blockchain implementation based on Bitshare2.0 for data area scenario.
 
-Import new object type to support data creation and transacton.
+Import new object type to support data creation and transaction.
 
 Migrate webassembly VM into AAA chain to provide contract.
 
