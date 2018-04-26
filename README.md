@@ -24,9 +24,10 @@ To build after all dependencies are installed:
     git checkout <LATEST_RELEASE_TAG>
     git submodule update --init --recursive
     cmake -DCMAKE_BUILD_TYPE=Release .
-    make
+    make -j8  
 
-**NOTE:** AAA Chain requires a [Boost](http://www.boost.org/) version in the range [1.57, 1.63]. 
+
+**NOTE:** To speed the buiding, usually set the number of parallel tasks to twice of the number of cpu cores. AAA Chain requires a [Boost](http://www.boost.org/) version in the range [1.57, 1.63]. 
 
 Start witness node
 ------------------
