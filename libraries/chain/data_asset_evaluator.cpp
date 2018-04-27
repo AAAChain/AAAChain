@@ -53,7 +53,7 @@ object_id_type data_asset_create_evaluator::do_apply( const data_asset_create_op
    const data_asset_object& new_data_asset =
      db().create<data_asset_object>( [&]( data_asset_object& a ) {
          a.url = op.url;
-         a.content_hash = op.content_hash;
+         a.data_hash = op.data_hash;
 	 a.data_size = op.data_size;
 	 a.data_desc = op.data_desc;
 	 a.owner = op.owner;

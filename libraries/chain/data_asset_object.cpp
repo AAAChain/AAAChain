@@ -30,7 +30,7 @@
 
 using namespace graphene::chain;
 
-void graphene::chain::data_asset_object::updateDataKey(public_key_type current_key)
+void graphene::chain::data_asset_object::updateDataKey(int current_key)
 {
 	data_key = current_key;
 }

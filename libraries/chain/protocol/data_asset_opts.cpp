@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Cryptonomex, Inc., and contributors.
+ * Copyright (c) 2018 AAA Foundation., and contributors.
  *
  * The MIT License
  *

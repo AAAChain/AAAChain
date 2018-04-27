@@ -35,11 +35,11 @@ namespace graphene { namespace chain {
       asset              fee;
 
       string             url;
-      fc::uint128        content_hash;
+      int                data_hash;
       int                data_size;
       string             data_desc; 
       account_id_type    owner;
-      public_key_type    data_key;
+      int                data_key;
 
       account_id_type   fee_payer()const { return owner; }
       void              validate()const;
@@ -50,7 +50,7 @@ namespace graphene { namespace chain {
 FC_REFLECT( graphene::chain::data_asset_create_operation::fee_parameters_type, (fee) )
 FC_REFLECT( graphene::chain::data_asset_create_operation,
             (url)
-            (content_hash)
+            (data_hash)
             (data_size)
             (data_desc)
             (owner)
