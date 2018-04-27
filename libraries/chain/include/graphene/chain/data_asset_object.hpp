@@ -47,7 +47,7 @@ namespace graphene { namespace chain {
          string url;
 
 	 /// The hash value of the data asset content
-	 fc::uint128 content_hash;
+	 int data_hash;
 
 	 /// Size of data asset content, in byte
 	 int data_size;
@@ -62,12 +62,12 @@ namespace graphene { namespace chain {
 	 optional<account_id_type> buyer;
 
 	 /// The encrypted private key for data
-	 public_key_type data_key; //need to double check the data type?
+	 int data_key; //need to double check the data type?
 
          data_asset_id_type get_id()const { return id; }
 
 	 /// the data owner can update data encryption key
-	 void updateDataKey(public_key_type current_key); 
+	 void updateDataKey(int current_key); 
 
          void validate()const
          {
@@ -75,11 +75,21 @@ namespace graphene { namespace chain {
 
    };
 
+   struct by_owner;
+   typedef multi_index_container<
+      data_asset_object,
+      indexed_by<
+         ordered_unique< tag<by_id>, member< object, object_id_type, &object::id > >,
+         ordered_non_unique< tag<by_owner>, member<data_asset_object, account_id_type, &data_asset_object::owner > >
+      >
+   > data_asset_object_multi_index_type;
+   typedef generic_index<data_asset_object, data_asset_object_multi_index_type> data_asset_index;
+
 } } // graphene::chain
 
 FC_REFLECT_DERIVED( graphene::chain::data_asset_object, (graphene::db::object),
                     (url)
-                    (content_hash)
+                    (data_hash)
                     (data_size)
                     (data_desc)
                     (owner)
