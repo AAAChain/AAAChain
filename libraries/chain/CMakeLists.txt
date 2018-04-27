@@ -58,6 +58,7 @@ add_library( graphene_chain
              protocol/fee_schedule.cpp
              protocol/confidential.cpp
              protocol/vote.cpp
+             protocol/data_asset_opts.cpp
 
              genesis_state.cpp
              get_config.cpp
@@ -92,6 +93,7 @@ add_library( graphene_chain
              is_authorized_asset.cpp
 
              data_asset_object.cpp
+	     data_asset_evaluator.cpp
 
              ${HEADERS}
              ${PROTOCOL_HEADERS}

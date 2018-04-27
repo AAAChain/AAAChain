@@ -198,6 +198,7 @@ struct get_impacted_account_visitor
    {
       _impacted.insert( op.account_id );
    }
+   void operator()( const data_asset_create_operation& op ) {}
 
 };
 
@@ -287,7 +288,12 @@ static void get_relevant_accounts( const object* obj, flat_set<account_id_type>&
         } case balance_object_type:{
            /** these are free from any accounts */
            break;
-        }
+        } case data_asset_object_type:{
+	   const auto& aobj = dynamic_cast<const data_asset_object*>(obj);
+	   assert( aobj != nullptr );
+           accounts.insert( aobj->owner );
+	   break;
+	}
       }
    }
    else if( obj->id.space() == implementation_ids )

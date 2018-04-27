@@ -211,6 +211,8 @@ struct get_impacted_account_visitor
       _impacted.insert( op.account_id );
    }
 
+   void operator()( const data_asset_create_operation& op ) {}
+
 };
 
 void operation_get_impacted_accounts( const operation& op, flat_set<account_id_type>& result )
