@@ -2447,6 +2447,31 @@ public:
       return sign_transaction(tx, broadcast);
    }
 
+signed_transaction create_data_asset(string owner, string url,
+                                     string data_desc,
+                                     int data_hash,
+                                     int data_size,
+                                     int data_key,
+                                     bool broadcast = false)
+   { try {
+      account_object owner_account = get_account( owner );
+
+      data_asset_create_operation create_op;
+      create_op.owner = owner_account.id;
+      create_op.url = url;
+      create_op.data_desc = data_desc;
+      create_op.data_hash = data_hash;
+      create_op.data_key = data_key;
+
+      signed_transaction tx;
+      tx.operations.push_back( create_op );
+      set_operation_fees( tx, _remote_db->get_global_properties().parameters.current_fees);
+      tx.validate();
+
+      return sign_transaction( tx, broadcast );
+   } FC_CAPTURE_AND_RETHROW( (owner)(url)(data_desc)(data_hash)(data_size)(data_key)(broadcast) ) }
+
+
    void dbg_make_uia(string creator, string symbol)
    {
       asset_options opts;
@@ -3573,6 +3598,17 @@ signed_transaction wallet_api::approve_proposal(
    return my->approve_proposal( fee_paying_account, proposal_id, delta, broadcast );
 }
 
+signed_transaction wallet_api::create_data_asset(string owner, string url,
+                                     string data_desc,
+                                     int data_hash,
+                                     int data_size,
+                                     int data_key,
+                                     bool broadcast)
+
+{
+   return my->create_data_asset(owner, url, data_desc, data_hash, data_size, data_key, broadcast);
+}
+
 global_property_object wallet_api::get_global_properties() const
 {
    return my->get_global_properties();
@@ -3646,6 +3682,12 @@ string wallet_api::gethelp(const string& method)const
       ss << "\nExample value of BITASSET_OPTIONS: \n";
       ss << fc::json::to_pretty_string( graphene::chain::bitasset_options() );
       ss << "\nBITASSET_OPTIONS may be null\n";
+   }
+   else if( method == "create_data_asset" )
+   {
+      ss << "usage: OWNER URL DATA_DESC DATA_HASH DATA_SIZE DATA_KEY BROADCAST\n\n";
+      ss << "\n";
+      ss << "Use this method to create a new data asset.";
    }
    else
    {

@@ -1519,6 +1519,24 @@ class wallet_api
          const approval_delta& delta,
          bool broadcast /* = false */
          );
+
+      /** Create a new data asset
+       *
+       * @param owner the name of the account to own the data
+       * @param url the url point the data content in data store
+       * @param data_desc the desc of the data 
+       * @param data_hash hash value of the data content
+       * @param data_size size of the data content, in bytes
+       * @param data_key the key to decrypt the data
+       * @param broadcast true if you wish to broadcast the transaction
+       * @returns the signed transaction issuing the new shares
+       */
+      signed_transaction create_data_asset(string owner, string url,
+                                     string data_desc,
+                                     int data_hash,
+                                     int data_size,
+                                     int data_key,
+                                     bool broadcast);
          
       order_book get_order_book( const string& base, const string& quote, unsigned limit = 50);
 
@@ -1733,4 +1751,5 @@ FC_API( graphene::wallet::wallet_api,
         (blind_history)
         (receive_blind_transfer)
         (get_order_book)
+        (create_data_asset)
       )
