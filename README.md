@@ -65,3 +65,9 @@ Support
 bugs can be reported to the [issue tracker](https://github.com/AAAChain/aaa_chain/issues).
 
 wallet api can be viewed from [wiki-wallet-api](https://github.com/AAAChain/aaa_chain/wiki/Wallet-API-Call).
+
+Notice
+==========
+
+
+Please notice the current open source version of AAA chain is behind our latest development version. This is to protect IP right in the early stage of project development.
