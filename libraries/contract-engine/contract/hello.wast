@@ -1,0 +1,16 @@
+(module
+ (type $FUNCSIG$vi (func (param i32)))
+ (import "env" "prints" (func $prints (param i32)))
+ (table 0 anyfunc)
+ (memory $0 1)
+ (data (i32.const 4) "0@\00\00")
+ (data (i32.const 16) "hello smart contract\00")
+ (export "memory" (memory $0))
+ (export "main" (func $main))
+ (func $main (param $0 i32) (param $1 i32) (result i32)
+  (call $prints
+   (i32.const 16)
+  )
+  (unreachable)
+ )
+)

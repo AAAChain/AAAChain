@@ -14,27 +14,27 @@ set(WAVM_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/Include)
 include_directories(${WAVM_INCLUDE_DIR})
 #
 	# Use C++11
-#	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 	# Compile with all warnings and fatal warnings
-#	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 
 	# Disable RTTI
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 	
 	# Ensure that even static libraries are relocatable so they can be linked into a .so
-#	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 	# Enable asan in debug builds.
-#	if(CMAKE_BUILD_TYPE MATCHES "Debug")
-#		option(ENABLE_ASAN "enable ASAN" ON)
-#		add_definitions("-D_DEBUG")
-#	else()
-#		option(ENABLE_ASAN "enable ASAN" OFF)
-#	endif()
-#	if(ENABLE_ASAN)
-#		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-#	endif()
+	if(CMAKE_BUILD_TYPE MATCHES "Debug")
+		option(ENABLE_ASAN "enable ASAN" ON)
+		add_definitions("-D_DEBUG")
+	else()
+		option(ENABLE_ASAN "enable ASAN" OFF)
+	endif()
+	if(ENABLE_ASAN)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+	endif()
 
 option(WAVM_METRICS_OUTPUT "controls printing the timings of some operations to stdout" OFF)
 if(WAVM_METRICS_OUTPUT)
