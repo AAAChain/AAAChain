@@ -29,6 +29,7 @@
 
 #include <graphene/chain/account_object.hpp>
 #include <graphene/chain/data_asset_object.hpp>
+#include <graphene/app/database_api.hpp>
 
 #include <fc/crypto/digest.hpp>
 
@@ -67,6 +68,12 @@ BOOST_AUTO_TEST_CASE( create_data_asset )
       BOOST_CHECK(test_data_asset.url == url);
       BOOST_CHECK(test_data_asset.data_size == test_data.length());
       BOOST_CHECK(test_data_asset.data_desc == test_desc);
+
+      BOOST_TEST_MESSAGE("verify get_data_asset db api");
+      graphene::app::database_api db_api(db);
+      vector< data_asset_id_type > ids{ test_data_asset_id};
+      vector<optional<data_asset_object>> data_assets = db_api.get_data_assets(ids);      
+      ilog("dbapi get_data_asset return ${value}", ("value", data_assets));
 
    } catch(fc::exception& e) {
       edump((e.to_detail_string()));
