@@ -35,59 +35,54 @@ namespace graphene { namespace chain {
       struct fee_parameters_type { uint64_t fee = 0*GRAPHENE_BLOCKCHAIN_PRECISION; };
 
       asset              fee;
-
-      string             url;
-      int                data_hash;
-      int                data_size;
-      string             data_desc; 
       account_id_type    ownerId;
+      string             url;
+      string             data_desc; 
+      int                data_hash;
       int                data_key;
+      int                data_size;
 
       authority       owner;
       authority       active;
 
       account_id_type   fee_payer()const { return ownerId; }
       void              validate()const;
+      share_type      calculate_fee(const fee_parameters_type& k)const;
    };
 
    struct data_asset_update_operation : public base_operation
    {
-
-      struct ext
-      {
-         optional< void_t >            null_ext;
-         optional< special_authority > owner_special_authority;
-         optional< special_authority > active_special_authority;
-      };
 
       struct fee_parameters_type { uint64_t fee = 0*GRAPHENE_BLOCKCHAIN_PRECISION; };
       asset              fee;
 
       account_id_type   ownerId;
 
+      
       authority       owner;
       authority       active;
-      extension< ext > extensions;
 
       account_id_type   fee_payer()const { return ownerId; }
       void              validate()const;
       share_type      calculate_fee(const fee_parameters_type& k)const;
-      void get_required_active_authorities( flat_set<account_id_type>& a )const
-      { a.insert( ownerId ); }
    }; 
 
 } } // graphene::chain
 
 FC_REFLECT( graphene::chain::data_asset_create_operation::fee_parameters_type, (fee) )
 FC_REFLECT( graphene::chain::data_asset_create_operation,
-            (url)
-            (data_hash)
-            (data_size)
-            (data_desc)
+	    (fee)
             (ownerId)
-            (data_key)
+            (url)
+            (data_desc)
+            (data_hash)
+            (data_key) 
+            (data_size)
+	    (owner)(active)
           )
 FC_REFLECT( graphene::chain::data_asset_update_operation::fee_parameters_type, (fee) )
 FC_REFLECT( graphene::chain::data_asset_update_operation,
+	    (fee)
             (ownerId)
+	    (owner)(active)
           )
