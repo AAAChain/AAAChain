@@ -49,6 +49,7 @@ digest_type transaction::sig_digest( const chain_id_type& chain_id )const
    digest_type::encoder enc;
    fc::raw::pack( enc, chain_id );
    fc::raw::pack( enc, *this );
+   idump((*this));
    return enc.result();
 }
 
@@ -111,6 +112,7 @@ struct sign_state
        */
       bool signed_by( const public_key_type& k )
       {
+	 ilog("signed_by input key:${input}, provied:${provid} available:${available}", ("input", k)("provid", provided_signatures)("available", available_keys)); 
          auto itr = provided_signatures.find(k);
          if( itr == provided_signatures.end() )
          {
@@ -160,6 +162,7 @@ struct sign_state
 
       bool check_authority( account_id_type id )
       {
+	 ilog("check auth account id: ${id} apprvoed_by: ${approved_by} active:${active}", ("id", id)("approved_by", approved_by)("active", *get_active(id)));
          if( approved_by.find(id) != approved_by.end() ) return true;
          return check_authority( get_active(id) );
       }
@@ -175,19 +178,25 @@ struct sign_state
 
          uint32_t total_weight = 0;
          for( const auto& k : auth.key_auths )
+         {
             if( signed_by( k.first ) )
             {
                total_weight += k.second;
                if( total_weight >= auth.weight_threshold )
+	       {
                   return true;
+	       }
             }
+	 }
 
          for( const auto& k : auth.address_auths )
             if( signed_by( k.first ) )
             {
                total_weight += k.second;
                if( total_weight >= auth.weight_threshold )
+	       {
                   return true;
+	       }
             }
 
          for( const auto& a : auth.account_auths )
@@ -201,14 +210,18 @@ struct sign_state
                   approved_by.insert( a.first );
                   total_weight += a.second;
                   if( total_weight >= auth.weight_threshold )
+	          {
                      return true;
+		  }
                }
             }
             else
             {
                total_weight += a.second;
                if( total_weight >= auth.weight_threshold )
+	       {
                   return true;
+	       }
             }
          }
          return total_weight >= auth.weight_threshold;
@@ -231,6 +244,7 @@ struct sign_state
                   const flat_set<public_key_type>& keys = flat_set<public_key_type>() )
       :get_active(a),available_keys(keys)
       {
+	 ilog("sign_state ${sigs}", ("sigs", sigs));
          for( const auto& key : sigs )
             provided_signatures[ key ] = false;
          approved_by.insert( GRAPHENE_TEMP_ACCOUNT  );
@@ -305,11 +319,13 @@ flat_set<public_key_type> signed_transaction::get_signature_keys( const chain_id
    flat_set<public_key_type> result;
    for( const auto&  sig : signatures )
    {
+      //ilog("get_signature_keys sig:${sig} d:${d}, public_key:${key}", ("sig", sig)("d", d)("key", fc::ecc::public_key(sig,d)));
       GRAPHENE_ASSERT(
          result.insert( fc::ecc::public_key(sig,d) ).second,
          tx_duplicate_sig,
          "Duplicate Signature detected" );
    }
+   //ilog("get_signature_keys result:${result}", ("result", result));
    return result;
 } FC_CAPTURE_AND_RETHROW() }
 
