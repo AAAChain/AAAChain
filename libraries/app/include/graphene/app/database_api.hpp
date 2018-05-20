@@ -40,6 +40,7 @@
 #include <graphene/chain/proposal_object.hpp>
 #include <graphene/chain/worker_object.hpp>
 #include <graphene/chain/witness_object.hpp>
+#include <graphene/chain/data_asset_object.hpp>
 
 #include <graphene/market_history/market_history_plugin.hpp>
 
@@ -620,6 +621,25 @@ class database_api
        */
       vector<blinded_balance_object> get_blinded_balances( const flat_set<commitment_type>& commitments )const;
 
+      //////////////////////
+      // Data asset       //
+      //////////////////////
+
+      /**
+       * @brief Get a list of data assets by ID
+       * @param data_asset_ids IDs of the data assets to retrieve
+       * @return The data assets corresponding to the provided IDs
+       *
+       */
+      vector<optional<data_asset_object>> get_data_assets(const vector<data_asset_id_type>& data_asset_ids)const;
+      /**
+       * @brief Get a list of data assets by owner
+       * @param name owner of the data assets to retrieve
+       * @return The data assets corresponding to the provided IDs
+       *
+       */
+      //vector<data_asset_object> get_data_assets_by_owner(const std::string& name)const;
+
    private:
       std::shared_ptr< database_api_impl > my;
 };
@@ -731,4 +751,8 @@ FC_API(graphene::app::database_api,
 
    // Blinded balances
    (get_blinded_balances)
+
+   // Data Assets
+   (get_data_assets)
+   //(get_data_assets_by_owner)
 )

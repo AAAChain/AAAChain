@@ -154,6 +154,10 @@ class database_api_impl : public std::enable_shared_from_this<database_api_impl>
       // Blinded balances
       vector<blinded_balance_object> get_blinded_balances( const flat_set<commitment_type>& commitments )const;
 
+      // Data Assets
+      vector<optional<data_asset_object>> get_data_assets(const vector<data_asset_id_type>& data_asset_ids)const;
+      //vector<data_asset_object> get_data_assets_by_owner(const std::string& name)const;
+
 
    //private:
       static string price_to_string( const price& _price, const asset_object& _base, const asset_object& _quote );
@@ -244,7 +248,7 @@ database_api::~database_api() {}
 
 database_api_impl::database_api_impl( graphene::chain::database& db ):_db(db)
 {
-   wlog("creating database api ${x}", ("x",int64_t(this)) );
+   wlog("creating database api 222 ${x}", ("x",int64_t(this)) );
    _new_connection = _db.new_objects.connect([this](const vector<object_id_type>& ids, const flat_set<account_id_type>& impacted_accounts) {
                                 on_objects_new(ids, impacted_accounts);
                                 });
@@ -729,6 +733,7 @@ optional<account_object> database_api::get_account_by_name( string name )const
 
 optional<account_object> database_api_impl::get_account_by_name( string name )const
 {
+   elog( "get account by name called" );
    const auto& idx = _db.get_index_type<account_index>().indices().get<by_name>();
    auto itr = idx.find(name);
    if (itr != idx.end())
@@ -2050,6 +2055,37 @@ vector<blinded_balance_object> database_api_impl::get_blinded_balances( const fl
    }
    return result;
 }
+
+
+//////////////////////////////////////////////////////////////////////
+//                                                                  //
+// Data Assets                                                           //
+//                                                                  //
+//////////////////////////////////////////////////////////////////////
+
+vector<optional<data_asset_object>> database_api::get_data_assets(const vector<data_asset_id_type>& data_asset_ids)const
+{
+   return my->get_data_assets( data_asset_ids );
+}
+
+vector<optional<data_asset_object>> database_api_impl::get_data_assets(const vector<data_asset_id_type>& data_asset_ids)const
+{
+   elog( "databaseapi get_data_assets" );
+   vector<optional<data_asset_object>> result; result.reserve(data_asset_ids.size());
+   std::transform(data_asset_ids.begin(), data_asset_ids.end(), std::back_inserter(result),
+                  [this](data_asset_id_type id) -> optional<data_asset_object> {
+      if(auto o = _db.find(id))
+      {
+         idump((id));
+         subscribe_to_item( id );
+         return *o;
+      }
+      return {};
+   });
+   return result;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////
 //                                                                  //
