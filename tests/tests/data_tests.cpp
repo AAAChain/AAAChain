@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( create_data_asset )
       BOOST_TEST_MESSAGE( "start create data asset" );
       data_asset_id_type test_data_asset_id = db.get_index<data_asset_object>().get_next_id();
       data_asset_create_operation creator;
-      creator.owner = account_id_type();
+      creator.ownerId = account_id_type();
       creator.fee = asset();
       creator.url = url;
       //creator.data_hash = fc::sha256::hash(test_data);

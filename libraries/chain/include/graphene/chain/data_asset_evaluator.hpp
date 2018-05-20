@@ -39,7 +39,6 @@ namespace graphene { namespace chain {
          virtual void pay_fee() override;
    };
 
-   /*
    class data_asset_update_evaluator : public evaluator<data_asset_update_evaluator>
    {
       public:
@@ -48,7 +47,8 @@ namespace graphene { namespace chain {
          void_result do_evaluate( const data_asset_update_operation& o );
          void_result do_apply( const data_asset_update_operation& o );
 
-         const data_asset_object* data_asset_to_update = nullptr;
-   };*/
+         virtual void pay_fee() override;
+
+   };
 
 } } // graphene::chain

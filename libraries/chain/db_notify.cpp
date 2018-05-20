@@ -199,6 +199,7 @@ struct get_impacted_account_visitor
       _impacted.insert( op.account_id );
    }
    void operator()( const data_asset_create_operation& op ) {}
+   void operator()( const data_asset_update_operation& op ) {}
 
 };
 
@@ -291,7 +292,7 @@ static void get_relevant_accounts( const object* obj, flat_set<account_id_type>&
         } case data_asset_object_type:{
 	   const auto& aobj = dynamic_cast<const data_asset_object*>(obj);
 	   assert( aobj != nullptr );
-           accounts.insert( aobj->owner );
+           accounts.insert( aobj->ownerId );
 	   break;
 	}
       }

@@ -56,7 +56,7 @@ namespace graphene { namespace chain {
 	 string data_desc;
 
 	 /// Owner who created the data asset
-	 account_id_type owner;
+	 account_id_type ownerId;
 
 	 /// the buyer of the data asset
 	 optional<account_id_type> buyer;
@@ -80,7 +80,7 @@ namespace graphene { namespace chain {
       data_asset_object,
       indexed_by<
          ordered_unique< tag<by_id>, member< object, object_id_type, &object::id > >,
-         ordered_non_unique< tag<by_owner>, member<data_asset_object, account_id_type, &data_asset_object::owner > >
+         ordered_non_unique< tag<by_owner>, member<data_asset_object, account_id_type, &data_asset_object::ownerId > >
       >
    > data_asset_object_multi_index_type;
    typedef generic_index<data_asset_object, data_asset_object_multi_index_type> data_asset_index;
@@ -92,7 +92,7 @@ FC_REFLECT_DERIVED( graphene::chain::data_asset_object, (graphene::db::object),
                     (data_hash)
                     (data_size)
                     (data_desc)
-                    (owner)
+                    (ownerId)
                     (buyer)
                     (data_key)
                   )

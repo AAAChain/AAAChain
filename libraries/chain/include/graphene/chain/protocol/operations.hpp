@@ -95,7 +95,8 @@ namespace graphene { namespace chain {
             fba_distribute_operation,       // VIRTUAL
             bid_collateral_operation,
             execute_bid_operation,           // VIRTUAL
-            data_asset_create_operation
+            data_asset_create_operation,
+            data_asset_update_operation
          > operation;
 
    /// @} // operations group

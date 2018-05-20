@@ -23,6 +23,8 @@
  */
 #pragma once
 #include <graphene/chain/protocol/base.hpp>
+#include <graphene/chain/protocol/ext.hpp>
+#include <graphene/chain/protocol/special_authority.hpp>
 
 namespace graphene { namespace chain { 
 
@@ -38,12 +40,41 @@ namespace graphene { namespace chain {
       int                data_hash;
       int                data_size;
       string             data_desc; 
-      account_id_type    owner;
+      account_id_type    ownerId;
       int                data_key;
 
-      account_id_type   fee_payer()const { return owner; }
+      authority       owner;
+      authority       active;
+
+      account_id_type   fee_payer()const { return ownerId; }
       void              validate()const;
    };
+
+   struct data_asset_update_operation : public base_operation
+   {
+
+      struct ext
+      {
+         optional< void_t >            null_ext;
+         optional< special_authority > owner_special_authority;
+         optional< special_authority > active_special_authority;
+      };
+
+      struct fee_parameters_type { uint64_t fee = 0*GRAPHENE_BLOCKCHAIN_PRECISION; };
+      asset              fee;
+
+      account_id_type   ownerId;
+
+      authority       owner;
+      authority       active;
+      extension< ext > extensions;
+
+      account_id_type   fee_payer()const { return ownerId; }
+      void              validate()const;
+      share_type      calculate_fee(const fee_parameters_type& k)const;
+      void get_required_active_authorities( flat_set<account_id_type>& a )const
+      { a.insert( ownerId ); }
+   }; 
 
 } } // graphene::chain
 
@@ -53,6 +84,10 @@ FC_REFLECT( graphene::chain::data_asset_create_operation,
             (data_hash)
             (data_size)
             (data_desc)
-            (owner)
+            (ownerId)
             (data_key)
+          )
+FC_REFLECT( graphene::chain::data_asset_update_operation::fee_parameters_type, (fee) )
+FC_REFLECT( graphene::chain::data_asset_update_operation,
+            (ownerId)
           )

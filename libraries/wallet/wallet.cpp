@@ -2457,7 +2457,7 @@ signed_transaction create_data_asset(string owner, string url,
       account_object owner_account = get_account( owner );
 
       data_asset_create_operation create_op;
-      create_op.owner = owner_account.id;
+      create_op.ownerId = owner_account.id;
       create_op.url = url;
       create_op.data_desc = data_desc;
       create_op.data_hash = data_hash;

@@ -27,7 +27,20 @@ namespace graphene { namespace chain {
 
 void data_asset_create_operation::validate() const
 {
+   ilog("data_asset_create_operation::validate ..");
    FC_ASSERT(data_size > 0);
+}
+
+void data_asset_update_operation::validate() const
+{
+    ilog("data_asset_update_operation::validate ..");
+}
+
+share_type data_asset_update_operation::calculate_fee( const fee_parameters_type& schedule )const
+{
+   ilog("data asset update operation:calculate_fee");
+   share_type core_fee_required = schedule.fee;
+   return core_fee_required;
 }
 
 } }

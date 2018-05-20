@@ -2070,14 +2070,16 @@ vector<optional<data_asset_object>> database_api::get_data_assets(const vector<d
 
 vector<optional<data_asset_object>> database_api_impl::get_data_assets(const vector<data_asset_id_type>& data_asset_ids)const
 {
-   elog( "databaseapi get_data_assets" );
+   ilog( "database_api get_data_assets" );
    vector<optional<data_asset_object>> result; result.reserve(data_asset_ids.size());
    std::transform(data_asset_ids.begin(), data_asset_ids.end(), std::back_inserter(result),
                   [this](data_asset_id_type id) -> optional<data_asset_object> {
+   ilog( "database_api get_data_assets ${id}", ("id", id) );
       if(auto o = _db.find(id))
       {
          idump((id));
          subscribe_to_item( id );
+         ilog( "database_api get_data_assets return ${o}", ("o", *o) );
          return *o;
       }
       return {};

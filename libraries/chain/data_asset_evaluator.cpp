@@ -33,7 +33,7 @@ namespace graphene { namespace chain {
 
 void_result data_asset_create_evaluator::do_evaluate( const data_asset_create_operation& op )
 { try {
-
+   ilog( "data_asset_create_evalueor::do_evaluator...");
 
    FC_ASSERT(op.data_size > 0, "can't add empty data");
    return void_result();
@@ -48,6 +48,7 @@ void data_asset_create_evaluator::pay_fee()
 object_id_type data_asset_create_evaluator::do_apply( const data_asset_create_operation& op )
 { try {
 
+   ilog( "data_asset_create_evalueor::do_evaluator...");
    //auto next_data_asset_id = db().get_index_type<data_asset_index>().get_next_id();
 
    const data_asset_object& new_data_asset =
@@ -56,12 +57,34 @@ object_id_type data_asset_create_evaluator::do_apply( const data_asset_create_op
          a.data_hash = op.data_hash;
 	 a.data_size = op.data_size;
 	 a.data_desc = op.data_desc;
-	 a.owner = op.owner;
+	 a.ownerId = op.ownerId;
 	 a.data_key = op.data_key;
       });
    //assert( new_data_asset.id == next_data_asset_id );
 
+   ilog( "create data asset id:${id}", ("id", new_data_asset.id));
    return new_data_asset.id;
+} FC_CAPTURE_AND_RETHROW( (op) ) }
+
+void_result data_asset_update_evaluator::do_evaluate( const data_asset_update_operation& op )
+{ try {
+   ilog( "data_asset_update_evalueor::do_evaluator...");
+
+   return void_result();
+} FC_CAPTURE_AND_RETHROW( (op) ) }
+
+void data_asset_update_evaluator::pay_fee()
+{
+    //@todo: design and impl the pay related operation
+    //generic_evaluator::pay_fee();
+}
+
+void_result data_asset_update_evaluator::do_apply( const data_asset_update_operation& op )
+{ try {
+
+   ilog( "data_asset_update_evalueor::do_evaluator...");
+
+   return void_result();
 } FC_CAPTURE_AND_RETHROW( (op) ) }
 
 } } // graphene::chain

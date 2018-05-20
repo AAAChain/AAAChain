@@ -212,6 +212,7 @@ struct get_impacted_account_visitor
    }
 
    void operator()( const data_asset_create_operation& op ) {}
+   void operator()( const data_asset_update_operation& op ) {}
 
 };
 
