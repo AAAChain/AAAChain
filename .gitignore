@@ -17,6 +17,7 @@ libraries/utilities/git_revision.cpp
 libraries/wallet/Doxyfile
 libraries/wallet/api_documentation.cpp
 libraries/wallet/doxygen
+libraries/contract-engine/engine/wasm-jit/debug/
 
 programs/cli_wallet/cli_wallet
 programs/js_operation_serializer/js_operation_serializer
