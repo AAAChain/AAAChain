@@ -64,6 +64,20 @@ else()
 	add_definitions("-DENABLE_THREADING_PROTOTYPE=0")
 endif()
 
+FIND_PACKAGE(Boost 1.66 REQUIRED COMPONENTS
+    thread
+    date_time
+    filesystem
+    system
+    program_options
+    signals
+    serialization
+    chrono
+    unit_test_framework
+    context
+    locale
+    iostreams)
+
 add_subdirectory(Include/Inline)
 
 add_subdirectory(Source/Emscripten)
