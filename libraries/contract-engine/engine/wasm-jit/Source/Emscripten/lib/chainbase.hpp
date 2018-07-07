@@ -64,7 +64,7 @@ namespace chainbase {
 
       bool operator()( const shared_string& a, const std::string& b )const
       {
-         return less( a.c_str(), b.c_str() );
+        return less( a.c_str(), b.c_str() );
       }
 
       bool operator()( const std::string& a, const shared_string& b )const
@@ -950,9 +950,11 @@ namespace chainbase {
 
          bfs::path                                                   _data_dir;
 
+         #ifdef CHAINBASE_CHECK_LOCKING
          int32_t                                                     _read_lock_count = 0;
          int32_t                                                     _write_lock_count = 0;
          bool                                                        _enable_require_locking = false;
+         #endif
    };
 
    template<typename Object, typename... Args>

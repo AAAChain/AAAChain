@@ -86,7 +86,7 @@ namespace Intrinsics
 		operator Runtime::TableInstance*() const { return table; }
 
 	private:
-		const char* name;
+		//const char* name;
 		Runtime::TableInstance* const table;
 	};
 

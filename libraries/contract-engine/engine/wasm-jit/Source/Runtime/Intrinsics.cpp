@@ -79,8 +79,8 @@ namespace Intrinsics
 	}
 
 	Table::Table(const char* inName,const IR::TableType& type)
-	: name(inName)
-	, table(Runtime::createTable(type))
+	//: name(inName),
+	: table(Runtime::createTable(type))
 	{
 		//if(!table) { Errors::fatal("failed to create intrinsic table"); }
 
