@@ -1,4 +1,4 @@
-#include <chainbase/chainbase.hpp>
+#include "chainbase.hpp"
 #include <boost/array.hpp>
 
 #include <iostream>
