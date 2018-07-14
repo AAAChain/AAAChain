@@ -88,5 +88,6 @@ add_subdirectory(Source/Programs)
 add_subdirectory(Source/Runtime)
 add_subdirectory(Source/WASM)
 add_subdirectory(Source/WAST)
+add_subdirectory(Source/UnitTest)
 
 #add_subdirectory(Test/spec)
