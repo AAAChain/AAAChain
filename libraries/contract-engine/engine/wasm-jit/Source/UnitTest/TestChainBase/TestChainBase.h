@@ -16,10 +16,10 @@ protected:
 
     // Code here will be called immediately after the constructor (right
     // before each test).
-    virtual void SetUp(){}
+    virtual void SetUp();
 
     // Code here will be called immediately after each test (right
     // before the destructor).
-    virtual void TearDown(){}
+    virtual void TearDown();
 
 };
