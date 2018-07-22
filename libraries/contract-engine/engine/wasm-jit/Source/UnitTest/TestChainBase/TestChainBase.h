@@ -22,7 +22,9 @@ protected:
     // before the destructor).
     virtual void TearDown();
 
+    chainbase::database     *pDb; 
+
 private:
-   boost::filesystem::path temp; 
+   boost::filesystem::path temp;
 
 };

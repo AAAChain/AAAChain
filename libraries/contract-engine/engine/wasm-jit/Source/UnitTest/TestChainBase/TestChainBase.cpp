@@ -44,7 +44,8 @@ void ChainBaseTest::SetUp(){
    temp = boost::filesystem::unique_path();
    try {
       std::cerr << temp.native() << " \n";
-      chainbase::database db(temp, database::read_write, 1024*1024*8);
+      pDb = new  chainbase::database(temp, database::read_write, 1024*1024*8);
+      pDb->add_index<book_index>();
    } catch ( ... ) {
       bfs::remove_all( temp );
       throw;
@@ -53,9 +54,19 @@ void ChainBaseTest::SetUp(){
 
 void ChainBaseTest::TearDown(){
       bfs::remove_all( temp );
+      delete pDb;
 }
 
-TEST_F(ChainBaseTest, BasicTest1) {
-    EXPECT_EQ(true, true);
+TEST_F(ChainBaseTest, createObject) {
+      chainbase::database& db = *pDb;
+      const auto& bk = db.create<book>( []( book& b ) {
+          b.a = 3;
+          b.b = 4;
+      } );
+
+     const auto& bk1 = db.get(book::id_type(0));
+ 
+     EXPECT_EQ(bk.a, bk1.a);
+     EXPECT_EQ(bk.b, bk1.b);
 }
 
