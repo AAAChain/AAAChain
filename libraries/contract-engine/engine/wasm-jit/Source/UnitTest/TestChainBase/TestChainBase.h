@@ -22,4 +22,7 @@ protected:
     // before the destructor).
     virtual void TearDown();
 
+private:
+   boost::filesystem::path temp; 
+
 };

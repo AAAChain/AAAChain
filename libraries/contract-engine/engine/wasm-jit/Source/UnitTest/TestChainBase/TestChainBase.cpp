@@ -41,20 +41,21 @@ ChainBaseTest::ChainBaseTest()
 }
 
 void ChainBaseTest::SetUp(){
+   temp = boost::filesystem::unique_path();
+   try {
+      std::cerr << temp.native() << " \n";
+      chainbase::database db(temp, database::read_write, 1024*1024*8);
+   } catch ( ... ) {
+      bfs::remove_all( temp );
+      throw;
+   }
 }
 
 void ChainBaseTest::TearDown(){
-
+      bfs::remove_all( temp );
 }
 
-TEST_F(ChainBaseTest, SampleTest1) {
+TEST_F(ChainBaseTest, BasicTest1) {
     EXPECT_EQ(true, true);
 }
 
-TEST_F(ChainBaseTest, SampleTest2) {
-    EXPECT_EQ(false, false);
-}
-
-TEST_F(ChainBaseTest, SampleTest3) {
-    EXPECT_EQ(true, false);
-}
