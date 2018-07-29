@@ -86,6 +86,22 @@ TEST_F(ChainBaseTest, modifyObject) {
      EXPECT_EQ(bk.b, 6);
 }
 
+TEST_F(ChainBaseTest, deleteObject) {
+      chainbase::database& db = *pDb;
+      const auto& bk = db.create<book>( []( book& b ) {
+          b.a = 3;
+          b.b = 4;
+      } );
+     
+     book::id_type id = bk.id;
+      
+     EXPECT_TRUE(db.find(id) != nullptr);
+
+      db.remove( bk);
+
+     EXPECT_TRUE(db.find(id) == nullptr);
+}
+
 TEST_F(ChainBaseTest, undo) {
       chainbase::database& db = *pDb;
       const auto& bk = db.create<book>( []( book& b ) {
