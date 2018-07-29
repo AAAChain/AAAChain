@@ -86,3 +86,24 @@ TEST_F(ChainBaseTest, modifyObject) {
      EXPECT_EQ(bk.b, 6);
 }
 
+TEST_F(ChainBaseTest, undo) {
+      chainbase::database& db = *pDb;
+      const auto& bk = db.create<book>( []( book& b ) {
+          b.a = 3;
+          b.b = 4;
+      } );
+
+     auto session = db.start_undo_session(true);
+
+      db.modify( bk, [&]( book& b ) {
+          b.a = 5;
+          b.b = 6;
+      });
+
+     session.push();
+     
+     db.undo();
+
+     EXPECT_EQ(bk.a, 3);
+     EXPECT_EQ(bk.b, 4);
+}
