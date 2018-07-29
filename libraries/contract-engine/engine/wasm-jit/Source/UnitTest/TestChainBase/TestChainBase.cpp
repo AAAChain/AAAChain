@@ -70,3 +70,19 @@ TEST_F(ChainBaseTest, createObject) {
      EXPECT_EQ(bk.b, bk1.b);
 }
 
+TEST_F(ChainBaseTest, modifyObject) {
+      chainbase::database& db = *pDb;
+      const auto& bk = db.create<book>( []( book& b ) {
+          b.a = 3;
+          b.b = 4;
+      } );
+
+      db.modify( bk, [&]( book& b ) {
+          b.a = 5;
+          b.b = 6;
+      });
+
+     EXPECT_EQ(bk.a, 5);
+     EXPECT_EQ(bk.b, 6);
+}
+
